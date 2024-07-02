@@ -1,0 +1,338 @@
+.reports-management {
+  .scroll-container {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .scroll-item {
+    margin-right: 10px; /* Space between items */
+  }
+  .user-result {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    height: 35px;
+    background-color: #d9d9d9;
+    margin-top: 1rem;
+  }
+
+  .search-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it overlays other elements */
+    display: none;
+  }
+
+  .popup-content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    padding-top: 3rem;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 450px;
+    max-height: 80%;
+    overflow-y: auto; /* Scroll if content exceeds height */
+  }
+
+  .edit-popup {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it overlays other elements */
+    display: none;
+  }
+
+  .edit-content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 450px;
+    max-height: 80%;
+    overflow-y: auto; /* Scroll if content exceeds height */
+  }
+
+  .search-popup .close-popup, .popup-center .close-popup, .share-popup-content .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .client-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .label-user-name {
+    display: block;
+  }
+
+  .user-name-detail.edit-client-container {
+    display: none;
+  }
+  .user-name-detail.edit-client-container.show {
+    display: flex;
+  }
+  .cancel-client-name {
+    min-width: 90px;
+  }
+  .save-client-name {
+    min-width: 90px;
+  }
+  .report-search-component {
+    padding: 20px 17px;
+    border: 1px solid black;
+    margin-top: 0; 
+  }
+  .form-search-date-time {
+    margin-top: 0;
+  }
+  .report-option {
+    padding-top: 8px;
+  }
+  .edit-area {
+    padding: 0 4px 0 28px !important;
+    height: 40px;
+  }
+  .monthly-report-details {
+    display: flex;
+  }
+  .save-report {
+    width: 100px;
+    height: 27px;
+    background-color: #339063;
+    border: none;
+    color: white;
+  }
+  .card-medium {
+    text-align: center;
+    height: 82px;
+    line-height: 82px;
+    width: 110px;
+    border-radius: 5px;
+  }
+  .small-card {
+    font-size: 14px;
+    height: 24px;
+    width: 100px;
+  }
+  .x-large {
+    width: 120px;
+  }
+  .x-small-card {
+    height: 24px;
+    width: 60px;
+  }
+  .small-card-green {
+    width: 62px;
+    background-color: #64ECDC;
+  }
+  .report-section {
+    padding: 24px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .report-section-small {
+    padding: 15px;
+  }
+  .bg--dark-green {
+    background-color: #339063;
+  }
+  .bg--green {
+    background-color: #64ECDC;
+  }
+  .bg--pink {
+    background-color:#FF8A8A;
+  }
+  .bg--blue {
+    color: white;
+    background-color: #1B4D94;
+  }
+  .bg--red {
+    background-color: #FF8A8A;
+  }
+  .bg--dark-red {
+    background-color: #FB0000;
+  }
+  .bg--dark-gray {
+    background-color: #c7c7c7;
+  }
+  .bg--yellow {
+    background-color: #F47E29;
+  }
+  .bg--blue-default {
+    background-color: #1F6CA4;
+  }
+  .bg--light-blue {
+    background-color: #64ECDC;
+  }
+  .text-black {
+    color: black !important;
+  }
+  .note {
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+  }
+  .note-title {
+    width: 192px;
+  }
+  .note-content {
+    margin-left: 5px;
+    color: red;
+    flex-grow: 1;
+  }
+  .large {
+    width: 192px;
+  }
+  .card-167 {
+    width: 167px;
+  }
+  .gapp-5 {
+    flex-wrap: 3rem;
+  }
+  .select-year-report, .input-year-report {
+    text-align: center;
+    width: 100%;
+    height: 90%;
+    border: none;
+    outline: none;
+  }
+  .csv-div {
+    display: none;
+  }
+  .share-report-button {
+    outline: none;
+  }
+  .share-popup-bg-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;  
+  }
+  .share-popup {
+    z-index: 5;
+    width: 350px;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+  }
+  .share-popup-content {
+    padding: 40px;
+  }
+  .share-buttons {
+    outline: none !important;
+    border: none !important;
+    height: 32px !important;
+    line-height: 32px;
+    color: white;
+  }
+  .authority-window {
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  .normal-height {
+    height: 32px;
+  }
+  .popup-center {
+    padding: 2rem 1rem;
+    background-color: white;
+  }
+  .popup-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it overlays other elements */
+    transform: translate(-1px, -1px);
+  }
+  .datetime {
+    width: 100px;
+    padding-top: 6px;
+    padding-right: 10px;
+    input {
+      width: 100%;
+    }
+  }
+  .datetime.hour {
+    width: 95px;
+  }
+  .input-number.date, .input-number.hour {
+    width: 100%;
+  }
+  .col.expand {
+    margin-left: 40px;
+  }
+  .element-big {
+    width: 110px;
+  }
+  .element-default {
+    width: 75px;
+  }
+  .detail-row .col, .detail-row .element-big, .detail-row .element-default {
+    padding-top: 10px;
+  }
+  .show-client-name {
+    background-color: #1B4D94;
+    color:white;  
+    padding: 1.5rem 1rem;
+    width: 220px;
+    border-radius: 1rem;
+    line-height: 34px;
+  }
+  .article-last {
+    min-width: 300px;  
+  }
+  .button-search {
+    min-width: 82px;
+    border: none;
+    height: 38px;
+  }
+  .medium-search {
+    max-width: 400px;
+  }
+  .report-status {
+    height: 82px;
+    line-height: 74px;
+  }
+}

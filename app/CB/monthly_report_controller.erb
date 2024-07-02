@@ -1,0 +1,10 @@
+def search
+  client_ids = User.find_by(params[:user_id]).clients.pluck(:id)
+  reports = MonthlyReport.start_from(params[:start_time])
+                          .end_at(params[:end_time])
+                          .where(client_id: client_ids)
+                          .includes(:client)
+                          .order(:client_id)
+  reports_json = report_json(reports)
+  render json: { data: reports_json }, status: 200
+end

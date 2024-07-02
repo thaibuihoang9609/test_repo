@@ -1,0 +1,922 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active monthly-report-tag" href="#">Monthly Report</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link yearly-report-tag" href="#">Yearly Report</a>
+  </li>
+</ul>
+  
+<div class="pt-2 reports-management">
+  <div>ユーザー名で検索</div>
+  <div id="user-id" data-user-id="<%= @user&.id %>"></div>
+  <div id="reference-id"></div>
+  <!-- Search user -->
+  <div class="d-flex justify-content-between pt-1">
+    <div class="d-flex gap-20">
+      <div>
+        <input type="search" id="gsearch" name="gsearch" class="form-control search-input">
+      </div>
+      <div class="">
+        <button type="submit" class="btn btn-search d-flex align-items-center gap-8" id="searchForm">
+          検索
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.5033 9.50338H9.97659L9.78992 9.32338C10.4433 8.56338 10.8366 7.57671 10.8366 6.50338C10.8366 4.11004 8.89659 2.17004 6.50326 2.17004C4.10992 2.17004 2.16992 4.11004 2.16992 6.50338C2.16992 8.89671 4.10992 10.8367 6.50326 10.8367C7.57659 10.8367 8.56326 10.4434 9.32326 9.79004L9.50326 9.97671V10.5034L12.8366 13.83L13.8299 12.8367L10.5033 9.50338ZM6.50326 9.50338C4.84326 9.50338 3.50326 8.16338 3.50326 6.50338C3.50326 4.84338 4.84326 3.50338 6.50326 3.50338C8.16326 3.50338 9.50326 4.84338 9.50326 6.50338C9.50326 8.16338 8.16326 9.50338 6.50326 9.50338Z" fill="black"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="search-popup" class="search-popup">
+      <div id="popup-content" class="popup-content">
+        <button id="close-popup" class="close-popup">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16" viewBox="0 0 50 50">
+            <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
+          </svg>
+        </button>
+
+        <div class="d-flex gap-20">
+          <div class="flex-grow-1">
+            <input type="search" id="gsearch2" name="gsearch" class="form-control search-input">
+          </div>
+          <div class="">
+            <button type="submit" class="btn btn-search d-flex align-items-center gap-8" id="searchForm2">
+              検索
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5033 9.50338H9.97659L9.78992 9.32338C10.4433 8.56338 10.8366 7.57671 10.8366 6.50338C10.8366 4.11004 8.89659 2.17004 6.50326 2.17004C4.10992 2.17004 2.16992 4.11004 2.16992 6.50338C2.16992 8.89671 4.10992 10.8367 6.50326 10.8367C7.57659 10.8367 8.56326 10.4434 9.32326 9.79004L9.50326 9.97671V10.5034L12.8366 13.83L13.8299 12.8367L10.5033 9.50338ZM6.50326 9.50338C4.84326 9.50338 3.50326 8.16338 3.50326 6.50338C3.50326 4.84338 4.84326 3.50338 6.50326 3.50338C8.16326 3.50338 9.50326 4.84338 9.50326 6.50338C9.50326 8.16338 8.16326 9.50338 6.50326 9.50338Z" fill="black"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="search-results" class="search-results d-flex flex-column"></div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-20">
+      <div class="label-username d-none"><%= @user.name if @user %></div>
+      <div class="label-edit d-none"></div>
+    </div>
+  </div>
+
+  <div class="monthly-search-fields justify-content-around align-items-center my-3 d-none">
+    <input type="date" id="" name="report-date" class="form-control form-select-report ml-5 medium-search m-start-search" placeholder="yyyy-mm-dd"/>
+    <input type="date" id="" name="report-date" class="form-control form-select-report ml-5 medium-search m-end-search" placeholder="yyyy-mm-dd"/>
+    <div class="ml-5">
+      <button type="submit" class="btn btn-search d-flex align-items-center gap-8 button-search search-monthly-button" id="">
+        検索
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.5033 9.50338H9.97659L9.78992 9.32338C10.4433 8.56338 10.8366 7.57671 10.8366 6.50338C10.8366 4.11004 8.89659 2.17004 6.50326 2.17004C4.10992 2.17004 2.16992 4.11004 2.16992 6.50338C2.16992 8.89671 4.10992 10.8367 6.50326 10.8367C7.57659 10.8367 8.56326 10.4434 9.32326 9.79004L9.50326 9.97671V10.5034L12.8366 13.83L13.8299 12.8367L10.5033 9.50338ZM6.50326 9.50338C4.84326 9.50338 3.50326 8.16338 3.50326 6.50338C3.50326 4.84338 4.84326 3.50338 6.50326 3.50338C8.16326 3.50338 9.50326 4.84338 9.50326 6.50338C9.50326 8.16338 8.16326 9.50338 6.50326 9.50338Z" fill="black"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="yearly-search-fields justify-content-around align-items-center my-3 d-none">
+    <select id="" name="report-year" class="form-control form-select-report ml-5 medium-search y-start-search">
+      <% current_year = Time.now.year %>
+      <% (1990..current_year).to_a.reverse.each do |year| %>
+        <option value="<%= year %>"><%= year %></option>
+      <% end %>
+    </select>
+    <select id="" name="report-year" class="form-control form-select-report ml-5 medium-search y-end-search">
+      <% current_year = Time.now.year %>
+      <% (1990..current_year).to_a.reverse.each do |year| %>
+        <option value="<%= year %>"><%= year %></option>
+      <% end %>
+    </select>
+    <div class="ml-5">
+      <button type="submit" class="btn btn-search d-flex align-items-center gap-8 button-search search-yearly-button" id="">
+        検索
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.5033 9.50338H9.97659L9.78992 9.32338C10.4433 8.56338 10.8366 7.57671 10.8366 6.50338C10.8366 4.11004 8.89659 2.17004 6.50326 2.17004C4.10992 2.17004 2.16992 4.11004 2.16992 6.50338C2.16992 8.89671 4.10992 10.8367 6.50326 10.8367C7.57659 10.8367 8.56326 10.4434 9.32326 9.79004L9.50326 9.97671V10.5034L12.8366 13.83L13.8299 12.8367L10.5033 9.50338ZM6.50326 9.50338C4.84326 9.50338 3.50326 8.16338 3.50326 6.50338C3.50326 4.84338 4.84326 3.50338 6.50326 3.50338C8.16326 3.50338 9.50326 4.84338 9.50326 6.50338C9.50326 8.16338 8.16326 9.50338 6.50326 9.50338Z" fill="black"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="d-flex position-relative justify-content-around">
+    <button class=" d-flex align-items-center username-detail edit-area pr-3 bg--dark-gray rounded border-0 share-report-button">
+      <span class="mr-3">共有された報告書</span>
+      <svg id="edit-client-name-icon" width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.99927 13.3059V16.1985H4.49927L11.8726 7.66728L9.3726 4.77471L1.99927 13.3059ZM3.94593 14.6558H3.3326V13.9461L9.3726 6.95764L9.98593 7.66728L3.94593 14.6558ZM13.8059 4.34275L12.2459 2.53778C12.1126 2.38351 11.9459 2.31409 11.7726 2.31409C11.5993 2.31409 11.4326 2.39122 11.3059 2.53778L10.0859 3.94936L12.5859 6.84194L13.8059 5.43036C14.0659 5.12953 14.0659 4.64358 13.8059 4.34275Z" fill="black"/>
+      </svg>
+    </button>
+
+    <div class="share-popup position-absolute rounded bg-white border d-none" id="share-popup">
+      <div class="position-relative share-popup-content">
+        <button class="close-popup" id="close-share-popup">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16" viewBox="0 0 50 50">
+            <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
+          </svg>
+        </button>
+
+        <button class="rounded my-3 d-block bg--yellow share-buttons w-100" id="change-share-button">権限変更</button>
+        <button class="rounded my-3 d-block bg--blue-default share-buttons w-100" id="transmit-share-button">権限移行</button>
+
+        <div class="my-3 change-authority-window authority-window  d-none" id="change-authority-window">
+          <form id="change-authority-form">
+            <div>              
+              <label for="client">クライアントの選択</label>
+              <select id="" name="client" class="w-100 text-center normal-height client-change-authority" required>
+              </select>
+            </div>
+            <div class="my-3">              
+              <label for="role">付与する権限選択</label>
+              <select id="current-authority" name="role" class="w-100 text-center normal-height" required>
+                <option value="master">マスター</option>
+                <option value="viewer">読者</option>
+                <option value="editor">編集者</option>
+                <option value="delete">権限を削除する</option>
+              </select>
+            </div>
+            <button type="submit" class="rounded my-3 bg--light-blue share-buttons w-100 text-black" id="new-authority-button">権限を変更する</button>
+          </form>
+        </div>
+
+        <div class="my-3 transfer-authority-window authority-window  d-none">
+          <div class="">
+            <form id="transfer-authority-form">
+              <div>              
+                <label for="client">クライアントの選択</label>
+                <select id="" name="client" class="w-100 text-center normal-height client-share-authority" required>
+                </select>
+              </div>
+              <div class="my-3">
+                <label for="user_email">権限付与する人メールアドレス</label>
+                <input type="email" id="user_email" name="user_email" class="w-100 text-center normal-height" required>
+              </div>
+              <div>
+                <label for="role">付与する権限選択</label>
+                <select id="status" name="role" class="w-100 text-center normal-height" required>
+                  <option value="viewer">読者</option>
+                  <option value="editor">編集者</option>
+                  <option value="master">マスター</option>
+                </select>
+              </div>
+              <button type="submit" class="rounded my-3 bg--light-blue share-buttons w-100 text-black">移行する</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup-background rounded d-none" id="already-has-authority-popup">
+          <div class="popup-center position-relative rounded border border-dark mx-3">
+            <button class="close-popup" id="close-popup-center">
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16" viewBox="0 0 50 50">
+                <path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"></path>
+              </svg>
+            </button>
+            <div class="text-danger text-center pt-3">付与したい人は既に持っています。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#" id="export-csv-link" class="ml-3">
+      <div class="btn btn-search d-flex align-items-center gap-8 button-search" id="export-csv-button">
+        CSV出力
+      </div>
+    </a>
+  </div>
+  <div class="d-none share-popup-bg-cover position-absolute w-100 h-100"></div>
+
+  <!-- List client -->
+  <div class="list-label-user-name clients-list-label"></div>
+
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- Edit client -->
+    <div class="user-name-detail edit-client-container report-search-component rounded">
+      <div class="label-username-detail edit-name-display">顧客名称:</div>
+      <div class=" d-flex align-items-center gap-41 username-detail edit-area">
+        <span id="active-client-name"></span>
+        <svg id="edit-client-name-icon" width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.99927 13.3059V16.1985H4.49927L11.8726 7.66728L9.3726 4.77471L1.99927 13.3059ZM3.94593 14.6558H3.3326V13.9461L9.3726 6.95764L9.98593 7.66728L3.94593 14.6558ZM13.8059 4.34275L12.2459 2.53778C12.1126 2.38351 11.9459 2.31409 11.7726 2.31409C11.5993 2.31409 11.4326 2.39122 11.3059 2.53778L10.0859 3.94936L12.5859 6.84194L13.8059 5.43036C14.0659 5.12953 14.0659 4.64358 13.8059 4.34275Z" fill="black"/>
+        </svg>
+      </div>
+
+      <div id="edit-popup" class="edit-popup">
+        <div id="edit-content" class="edit-content">
+          <input type="text" id="edit-client-name" class="form-control" />
+          <div class="d-flex justify-content-around mt-3">
+            <button id="save-client-name" class="btn btn-primary save-client-name" data-csrf-token="<%= form_authenticity_token %>">保存</button>
+            <button id="cancel-client-name" class="btn btn-primary cancel-client-name" data-csrf-token="<%= form_authenticity_token %>">取り消す</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Radio buttons for selecting report type -->
+    <div class="report-search-component rounded d-none" id="radio-container">
+      <div class="report-option">
+        <input type="radio" id="monthly-report" name="report-type" value="monthly" checked>
+        <label for="monthly-report">月例報告</label>
+      </div>
+      <div class="report-option ml-4">
+        <input type="radio" id="annual-report" name="report-type" value="yearly">
+        <label for="annual-report">年次報告</label>
+      </div>
+    </div>
+    <!-- Search datetime -->
+    <div class="form-search-date-time align-items-center d-none" id="date-time-container">
+      <div class="label-search-date-time">
+        <div class="search-date-time d-flex align-items-center">
+          <!-- Date or year input for monthly or yearly reports -->
+          <input type="date" id="report-date" name="report-date" class="form-control form-select-report" placeholder="yyyy-mm-dd"/>
+
+          <select id="report-year" name="report-year" class="form-control form-select-report d-none">
+            <option selected disabled>年を選択</option>
+            <% current_year = Time.now.year %>
+            <% (1990..current_year).to_a.reverse.each do |year| %>
+              <option value="<%= year %>"><%= year %></option>
+            <% end %>
+          </select>
+          <!-- Select tag for displaying reports -->
+          <select class="form-control form-select-report" id="report-select">
+            <option selected disabled>報告を選択</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div id='report-id'></div>
+  <div id='report-type'></div>
+
+  <div id="monthlyReportsContainer"></div>
+
+  <template id="monthlyReportTemplate">
+    <div class="monthly-report-details scroll-container mt-3">
+      <%# Client name %>
+      <div class="show-client-name">Client Name</div>
+
+      <!-- Datetime of month report -->
+      <div class="search-condition mt-0 ml-3" id="csv-div">
+        <div class="condition-search">
+          <div class="d-flex flex-column p-1 mr-2">
+            <div class="title-search-date-time p-1 bg--blue text-center rounded">
+              点検報告書
+            </div>
+            <div class="input-search-date-time my-2" id="exact-date-time">
+              2024/03/16 - 12:15:30
+            </div>
+          </div>
+          <div class="status-search-date-time report-status px-3 rounded" id="status">
+            完了
+          </div>
+        </div>
+      </div>
+
+      <!-- Result 1 -->
+      <div class="result-1 mt-0 d-flex bd-highlight flex-shrink-0 scroll-item ml-3">
+        <div class="result-title flex-shrink-1 bd-highligt">検針</div>
+        <div class="w-100 bd-highligt row-detail">
+            <div>
+              <div class="row bg-row">
+                <div class="element-big pr-3">
+                  IN時間
+                </div>
+                <div class="element-big pr-3">
+                  OUT時間
+                </div>
+                <div class="element-big pr-3">
+                  IN日付
+                </div>
+                <div class="element-big pr-3">
+                  OUT日付
+                </div>
+                <div class="element-default">
+                  報告種類
+                </div>
+                <div class="element-default">
+                  天候
+                </div>
+                <div class="element-default">
+                  外温度 (C)
+                </div>
+                <div class="element-default">
+                  湿度 (%)
+                </div>
+                <div class="element-default">
+                  室温 (C)
+                </div>
+                <div class="element-default">
+                  整理番号
+                </div>
+              </div>
+              <div class="row detail-row">
+                <div class="element-big pr-3">
+                  <input type="date" name="dateIn" required size="5" class="input-number date" />
+                </div>
+                <div class="element-big pr-3">
+                  <input type="date" name="dateOut" required size="5" class="input-number date" />
+                </div>
+                <div class="element-big pr-3">
+                  <input type="time" name="timeIn" required size="5" class="input-number hour" />
+                </div>
+                <div class="element-big pr-3">
+                  <input type="time" name="timeOut" required size="5" class="input-number hour" />
+                </div>
+                <div class="element-default">
+                  <select name="type" class="input-select text-center" required>
+                    <option value="1">月次</option>
+                    <option value="2">年次</option>
+                    <option value="3">精密</option>
+                    <option value="4">事故</option>
+                  </select>
+                </div>
+                <div class="element-default">
+                  <select name="weather.weatherType" class="input-select text-center" required>
+                    <option value="1">晴れ</option>
+                    <option value="2">曇り</option>
+                    <option value="3">雨</option>
+                    <option value="4">雪</option>
+                  </select>
+                </div>
+                <div class="element-default">
+                  <input type="text" name="weather.temperatureOutside" required size="5" class="input-number" />
+                </div>
+                <div class="element-default">
+                  <input type="text" name="weather.humidityRoom" required size="5" class="input-number" />
+                </div>
+                <div class="element-default">
+                  <input type="text" name="weather.temperatureRoom" required size="5" class="input-number" />
+                </div>
+                <div class="element-default">
+                  <input type="text" name="referenceNumber" required size="5" class="input-number" />
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- Result 2 -->
+      <div class="result-1 mt-0 d-flex bd-highlight flex-shrink-0 scroll-item">
+        <div class="result-title flex-shrink-1 bd-highligt">検針</div>
+        <div class="w-100 bd-highligt row-detail">
+            <div class="row">
+              <div class="col-6 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                  <div>現</div>
+                  <div>在</div>
+                  <div>地</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-2 flex-nowrap">
+                    <div class="col">
+                      全日電力
+                    </div>
+                    <div class="col pl-4">
+                      有効電力
+                    </div>
+                    <div class="col pl-3">
+                      無効電力
+                    </div>
+                    <div class="col pl-3">
+                      最大需要電力
+                    </div>
+                  </div>
+                  <div class="row pt-10">
+                    <div class="col">
+                      <input type="text" name="meterCurrent.allDayPower" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="meterCurrent.activePower" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="meterCurrent.reactivePower" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="meterCurrent.maximumPowerDemand" required size="5" class="input-number" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pl-3 col-6 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                  <div>現</div>
+                  <div>在</div>
+                  <div>地</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-3">
+                    <div class="col">
+                      全日電力
+                    </div>
+                    <div class="col">
+                      有効電力
+                    </div>
+                    <div class="col">
+                      無効電力
+                    </div>
+                    <div class="col">
+                      最大需要電力
+                    </div>
+                  </div>
+                  <div class="row pt-10">
+                    <div class="col">
+                    <input type="text" name="meterConfirmed.allDayPower" required size="5" class="input-number" />
+                  </div>
+                  <div class="col">
+                    <input type="text" name="meterConfirmed.activePower" required size="5" class="input-number" />
+                  </div>
+                  <div class="col">
+                    <input type="text" name="meterConfirmed.reactivePower" required size="5" class="input-number" />
+                  </div>
+                  <div class="col">
+                    <input type="text" name="meterConfirmed.maximumPowerDemand" required size="5" class="input-number" />
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- Result 3 -->
+        <div class="result-1 mt-0 d-flex bd-highlight flex-shrink-0 scroll-item">
+          <div class="result-title-1 flex-shrink-1 bd-highligt">高圧盤</div>
+          <div class="w-100 bd-highligt row-detail">
+            <div class="row">
+              <div class="col-5 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                    <div>電</div>
+                    <div>圧</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-2">
+                    <div class="col">
+                      R-S
+                    </div>
+                    <div class="col">
+                      S-T
+                    </div>
+                    <div class="col">
+                      T-R
+                    </div>
+                  </div>
+                  <div class="row pt-10 rs-row">
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.rs" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.st" required size="5" class="input-number" />
+                    </div>
+                    <div class="col col-pl">
+                      <input type="text" name="highVoltageBoard.tr" required size="5" class="input-number-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-7 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                    <div>電</div>
+                    <div>圧</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-3">
+                    <div class="col">
+                      R
+                    </div>
+                    <div class="col">
+                      S
+                    </div>
+                    <div class="col">
+                      T
+                    </div>
+                    <div class="col">
+                      電力
+                    </div>
+                    <div class="col">
+                      力率
+                    </div>
+                  </div>
+                  <div class="row pt-10 row-ml">
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.r" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.s" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.t" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.power" required size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="highVoltageBoard.powerFactor" required size="5" class="input-number-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- Result 4 -->
+      <div id="machineContainer" class="flex-shrink-0 scroll-item d-flex">
+
+      </div>
+      <template id="machineTemplate">
+        <div class="result-1 mt-0 ml-3 d-flex bd-highlight machine-infor">
+          <div class="result-title-2 flex-shrink-1 bd-highligt machine-title">高圧盤1</div>
+          <div class="w-100 bd-highligt row-detail">
+            <div class="row">
+              <div class="col-5 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                    <div>電</div>
+                    <div>圧</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-2">
+                    <div class="col">
+                      R-S
+                    </div>
+                    <div class="col">
+                      S-T
+                    </div>
+                    <div class="col">
+                      T-R
+                    </div>
+                  </div>
+                  <div class="row pt-10 rs-row">
+                    <div class="col">
+                      <input type="text" name="machineList.0.rs" size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="machineList.0.st" size="5" class="input-number" />
+                    </div>
+                    <div class="col col-pl">
+                      <input type="text" name="machineList.0.tr" size="5" class="input-number-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-7 d-flex bd-highlight gap-5">
+                <div class="flex-shrink-1 bd-highligt">
+                  <div class="title-detail">
+                    <div>電</div>
+                    <div>圧</div>
+                  </div>
+                </div>
+                <div class="w-100 bd-highligt">
+                  <div class="row bg-row bg-row-3">
+                    <div class="col">
+                      R
+                    </div>
+                    <div class="col">
+                      S
+                    </div>
+                    <div class="col">
+                      T
+                    </div>
+                    <div class="col">
+                      漏洩電流
+                    </div>
+                    <div class="col">
+                      室温
+                    </div>
+                  </div>
+                  <div class="row pt-10 row-ml">
+                    <div class="col">
+                      <input type="text" name="machineList.0.r" size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="machineList.0.s" size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="machineList.0.t" size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="machineList.0.leakage" size="5" class="input-number" />
+                    </div>
+                    <div class="col">
+                      <input type="text" name="machineList.0.temperature" size="5" class="input-number-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- Result 6 -->
+      <div class="result-1 mt-0 d-flex bd-highlight flex-shrink-0 scroll-item">
+        <div class="result-title-3 flex-shrink-1 bd-highligt">点検箇所</div>
+        <div class="w-100 bd-highligt row-detail">
+            <div>
+              <div class="row bg-row">
+                <div class="element-big text-center">
+                  区分開閉器
+                </div>
+                <div class="element-big text-center">
+                  高圧キャビネット
+                </div>
+                <div class="element-big text-center">
+                  引込線・支持物
+                </div>
+                <div class="element-default text-center">
+                  ケーブル
+                </div>
+                <div class="element-default text-center">
+                  断路器
+                </div>
+                <div class="element-big text-center">
+                  電力ヒューズ
+                </div>
+                <div class="element-default text-center">
+                  遮断器
+                </div>
+                <div class="element-big text-center">
+                  高圧負荷開閉器
+                </div>
+                <div class="element-default text-center">
+                  変圧器
+                </div>
+                <div class="element-big text-center">
+                  電力コンデンサ
+                </div>
+                <div class="element-big text-center">
+                  直列リアクトル
+                </div>
+                <div class="element-default text-center">
+                  避雷器
+                </div>
+                <div class="element-big text-center">
+                  計器用変成器
+                </div>
+                <div class="element-default text-center">
+                  母線等
+                </div>
+                <div class="element-big text-center">
+                  保護継電器
+                </div>
+                <div class="element-big text-center">
+                  受・配電盤
+                </div>
+                <div class="element-big text-center">
+                  接地線・保護官
+                </div>
+                <div class="element-big text-center">
+                  受電室建物
+                </div>
+                <div class="element-big text-center">
+                  キュービクル
+                </div>
+                <div class="element-default text-center">
+                  配電設備
+                </div>
+                <div class="element-big text-center">
+                  配線・配線器具
+                </div>
+                <div class="element-default text-center">
+                  低圧機器
+                </div>
+                <div class="element-default text-center">
+                  充電装置
+                </div>
+                <div class="element-default text-center">
+                  蓄電池
+                </div>
+                <div class="element-big text-center">
+                  発電機・原動機
+                </div>
+                <div class="element-default text-center">
+                  始動装備
+                </div>
+              </div>
+              <div class="row detail-row">
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.compartmentSwitch" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.highVoltageCabinet" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.serviceLine" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.cable" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.disconnector" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.electricFuse" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.circuitBreaker" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.highVoltageSwitch" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.transformer" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.electricCapacitor" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.seriesReactor" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.lightningArrester" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.gaugeTransformer" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.busLine" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.protectiveRelay" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.switchBoard" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.groundingWire" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.powerReceivingRoom" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.cubicle" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.powerDistributionFacility" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.wiring" class="input-select text-center" required>
+                    
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.lowVoltageEquipment" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.chargingDevice" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.battery" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-big text-center">
+                  <select name="inspectionPoints.generator" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+                <div class="element-default text-center">
+                  <select name="inspectionPoints.starter" class="input-select text-center" required>
+                    <option value="Dash">━</option>
+                    <option value="Circle">〇</option>
+                    <option value="Triangle">△</option>
+                    <option value="Cross">×</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+        
+      <!-- Result 7 -->
+      <div class="result-1 mt-0 d-flex bd-highlight flex-shrink-0 scroll-item">
+        <div class="result-title flex-shrink-1 bd-highligt">記事</div>
+        <div class="w-100 bd-highligt row-detail d-flex notes-container" id="notes-container"></div>
+      </div>
+      <div class="d-flex align-items-center"><button class="save-report save-monthly-report rounded mx-auto d-block mt-0 h-100" type="button" data-csrf-token="<%= form_authenticity_token %>">保存する</button></div>
+    </div>
+  </template>
+
+  <%= render 'yearly_report' %>
+
+</div>
